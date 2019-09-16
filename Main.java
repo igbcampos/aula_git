@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class Main {
 
 	public static void main(String[] args) {
-		Menu mainMenu =  new Menu("Menu Principal", Arrays.asList("Conta", "Cliente", "Operacoes", "Sair"));
+		Menu mainMenu =  new Menu("Menu Principal", Arrays.asList("Conta", "Cliente", "Operacoes", "Sair1"));
 		int op=0;
 		do {
 			op = mainMenu.getSelection();
