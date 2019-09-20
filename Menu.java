@@ -30,7 +30,7 @@ public class Menu {
 				System.out.println(i++ + " - " + option);
 			}
 
-			System.out.println("Informe a opcao desejada. ");
+			System.out.println("\nInforme a opcao desejada.");
 			String str = s.nextLine();
 			try {
 				op = Integer.parseInt(str);
@@ -39,15 +39,71 @@ public class Menu {
 				op =0;
 			}
 			if (op>=i){
-				System.out.println("Opcao errada!");
+				System.out.println("znOpcao errada!");
 				op=0;
 			}
-			if (op == 2) {
+			if(op == 1) {
+				cadastrarConta();
+			}
+			else if (op == 2) {
 				this.cadastrarCliente();
 			}
 
 		}
 		return op;
+	}
+
+	public void cadastrarConta() {
+		Scanner scanner = new Scanner(System.in);
+		int resposta;
+
+		do {
+			System.out.println("\nMenu Conta\n");
+			System.out.println("1 - Contas ja cadastradas\n2 - Cadastar conta\n");
+			resposta = scanner.nextInt();
+		} while(resposta != 1 && resposta != 2);
+
+		String nome, senha;
+		boolean flag = true;
+
+		nome = scanner.nextLine();
+		System.out.print("\nDigite seu nome: ");
+		nome = scanner.nextLine();
+
+		System.out.print("Digite sua senha: ");
+		senha = scanner.nextLine();
+
+		for(Cliente cliente : clientes) {
+			if(cliente.getNome().equals(nome) && cliente.getSenha().equals(senha)) {
+				if(resposta == 1) {
+					boolean achou = false;
+					System.out.print("\n");
+
+					for(Conta conta : cliente.getContas()) {
+						System.out.println("- Conta: " + conta.getConta() + " Agencia: " + conta.getAgencia());
+						achou = true;
+					}
+					
+					if(achou) {
+						System.out.print("\n");
+					}
+					else {
+						System.out.println("\nO cliente nao possui contas cadastradas.\n");
+					}
+				}
+				else {
+					Conta conta = new Conta();
+					cliente.abrirConta(conta);
+					System.out.println("\nConta criada.\nConta: " + conta.getConta() + " Agencia: " + conta.getAgencia() + "\n");
+				}
+
+				flag = false;
+			}
+		}
+
+		if(flag) {
+			System.out.println("\nInformacoes de cliente invalidas.\n");
+		}
 	}
 	
 	public void cadastrarCliente() {
@@ -57,7 +113,7 @@ public class Menu {
 		System.out.println("Informe o seu nome: ");
 		String nome = s.nextLine();
 		if(procuraCliente(nome) != null) {
-			System.out.println("Usuário Já Cadastrado !!\n");
+			System.out.println("Usuï¿½rio Jï¿½ Cadastrado !!\n");
 			
 			return;
 		}else {

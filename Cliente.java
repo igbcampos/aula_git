@@ -5,6 +5,10 @@ public class Cliente {
 	private String senha;
 	private ArrayList<Conta> lista_de_contas;
 	
+	public Cliente() {
+		this.lista_de_contas = new ArrayList<Conta>();
+	}
+
 	public void setNome(String n) {
 		this.nome = n;
 	}
@@ -23,6 +27,10 @@ public class Cliente {
 	
 	public void abrirConta(Conta c) {
 		this.lista_de_contas.add(c);
+	}
+	
+	public ArrayList<Conta> getContas() {
+		return this.lista_de_contas;
 	}
 	
 
