@@ -49,7 +49,7 @@ public class Conta {
         }
     }
 
-    public ArrayList getExtrato() {
+    public ArrayList<Operacao> getExtrato() {
         return extrato;
     }
 
