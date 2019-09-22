@@ -2,45 +2,51 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.io.IOException;
+import Conta;
 
 public class Operacao {
-    private List<String> options;
-    private Double valor;
+    
+    private Conta contaOrigem;
+    private Conta contaDestino;
+    private double valor;
+    private int tipoDaOperacao;
 
-    public Operacao(Double valor, List<String> options){
-        this.options = options;
+    public Operacao(Conta contaOrigem,Conta contaDestino,double valor,int tipoDaOperacao){
+        this.contaOrigem = contaOrigem;
+        this.contaDestino = contaDestino;
+        this.tipoDaOperacao = tipoDaOperacao;
         this.valor = valor;
     }
-    
-    public void imprimirMenu(){
-        int opcaoDoMenu = 1;
-        for(String option: options){
-            System.out.println(opcaoDoMenu++ + " - " + option);
+
+    public Operacao(Conta contaOrigem,double valor,int tipoDaOperacao){
+        this.contaOrigem = contaOrigem;
+        this.contaDestino = contaDestino;
+        this.tipoDaOperacao = tipoDaOperacao;
+        this.valor = valor;
+    }
+
+    public String pegarNomeDaOperacao(){
+        switch(this.tipoDaOperacao){
+            case 1:
+                return 'Saque';
+                break;
+            case 2: 
+                return 'Depósito';
+            case 3: 
+                return 'Transferência';
         }
     }
 
-    public String pegaEscolhaDoUsuario(){
-        System.out.println("Informe a opcao desejada. ");
-        Scanner input = new Scanner(System.in);
-        String str = input.nextLine();
-        return str;
+    public int pegarValorDaOperacao(){
+        return this.valor;
     }
 
-    public int validaEscolhaDoUsuario(){
-        int escolhaDoUsuario = 0;
-        try{
-            escolhaDoUsuario = Integer.parseInt(this.pegaEscolhaDoUsuario());
-        }catch(NumberFormatException e){
-            System.out.println("Opcao errada!");
-        }
-        return escolhaDoUsuario;
+    public Conta pegarContaDeOrigem(){
+        return this.contaOrigem;
     }
 
-    //Estou usando a main para testar as funções
-    // public static void main(String[] args){
-    //     Operacao op = new Operacao(45.4, Arrays.asList("Transferência","Saldo","Depósito"));
-    //     op.imprimirMenu();
-    //     System.out.println(op.validaEscolhaDoUsuario());
-    // }
+    public Conta pegarContaDeDestino(){
+        return this.contaDestino;
+    }
 
 }
