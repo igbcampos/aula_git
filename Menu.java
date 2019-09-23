@@ -174,7 +174,13 @@ public class Menu {
 		switch(this.pegarOpcaoDoMenu()){
 			case 1:
 				this.realizarDeposito();
-			break;
+				break;
+			case 2: 
+				this.realizarSaque();
+				break;
+			case 3:
+				this.realizarTransferencia();
+				break;
 		}
 	}
 
@@ -209,7 +215,6 @@ public class Menu {
 
 	}
 
-
 	public void realizarDeposito(){
 		
 		Scanner s = new Scanner(System.in);
@@ -243,5 +248,84 @@ public class Menu {
 			System.out.println("Cliente não cadastrado");
 		}
 
+	}
+
+	public void realizarSaque(){
+		Scanner s = new Scanner(System.in);
+		
+		System.out.println("Informe o seu nome: ");
+		String nome = s.nextLine();
+
+		Cliente cliente = this.procuraCliente(nome);
+
+		if(cliente != null){
+			System.out.println("Informe o sua senha: ");
+			String senha = s.nextLine();
+			
+			if(senha.equals(cliente.getSenha()) == false){
+				System.out.println("Senha inválida");
+			} 
+
+			Conta conta = this.buscarContaDoCliente(cliente);
+
+			System.out.println("Digite o valor do Saque: ");
+			String valorDoDeposito = s.nextLine();
+
+			try{
+				conta.sacar(Double.parseDouble(valorDoDeposito));
+				System.out.println("Seu novo saldo é: " + conta.getSaldo());
+			}catch(NumberFormatException e){
+				System.out.println("Valor de depósito inválido");
+			}
+			
+		}else {
+			System.out.println("Cliente não cadastrado");
+		}
+	}
+
+	public void realizarTransferencia(){
+		Scanner s = new Scanner(System.in);
+		
+		System.out.println("Informe o seu nome: ");
+		String nome = s.nextLine();
+
+		Cliente cliente = this.procuraCliente(nome);
+
+		if(cliente != null){
+			System.out.println("Informe o sua senha: ");
+			String senha = s.nextLine();
+			
+			if(senha.equals(cliente.getSenha()) == false){
+				System.out.println("Senha inválida");
+			} 
+				
+			System.out.println("Informe o seu nome: ");
+			String nomeDestino = s.nextLine();
+
+			Cliente clienteDestino = this.procuraCliente(nomeDestino);
+
+			if(clienteDestino != null){
+				Conta conta = this.buscarContaDoCliente(cliente);
+				Conta contaDestino = this.buscarContaDoCliente(clienteDestino);
+
+				System.out.println("Digite o valor da transferência: ");
+				String valorDoDeposito = s.nextLine();
+
+				try{
+					if((conta.getSaldo() - Double.parseDouble(valorDoDeposito)) > 0 ){
+						conta.sacar(Double.parseDouble(valorDoDeposito));
+						contaDestino.depositar(Double.parseDouble(valorDoDeposito));
+						System.out.println("Seu novo saldo é: " + conta.getSaldo());
+					}
+				}catch(NumberFormatException e){
+					System.out.println("Valor de depósito inválido");
+				}
+			}else {
+				System.out.println("Conta de destino não encontrada.");
+			}
+			
+		}else {
+			System.out.println("Cliente não cadastrado");
+		}
 	}
 }
