@@ -36,10 +36,10 @@ public class Menu {
 				op = Integer.parseInt(str);
 			}
 			catch (NumberFormatException e) {
-				op =0;
+				op = 0;
 			}
 			if (op>=i){
-				System.out.println("znOpcao errada!");
+				System.out.println("\nOpcao errada!");
 				op=0;
 			}
 			if(op == 1) {
@@ -47,8 +47,9 @@ public class Menu {
 			}
 			else if (op == 2) {
 				this.cadastrarCliente();
+			}else if (op == 3){
+				this.menuOperacoes();
 			}
-
 		}
 		return op;
 	}
@@ -143,5 +144,104 @@ public class Menu {
 		for(Cliente i: this.clientes) {
 			System.out.println(i.getNome());
 		}
+	}
+
+	public void imprimirMenuOperacoes(){
+		System.out.println("Operações disponíveis\n");
+		System.out.println("1 - Depositar");
+		System.out.println("2 - Sacar");
+		System.out.println("3 - Transferir");
+		System.out.println("0 - sair");
+	}
+
+	public int pegarOpcaoDoMenu(){
+		
+		this.imprimirMenuOperacoes();
+
+		Scanner s = new Scanner(System.in);
+		String opcao = s.nextLine();
+
+		try {
+			return Integer.parseInt(opcao);
+		}catch (NumberFormatException e){
+			return 0;
+		}
+
+	}
+
+	public void menuOperacoes(){
+		
+		switch(this.pegarOpcaoDoMenu()){
+			case 1:
+				this.realizarDeposito();
+			break;
+		}
+	}
+
+	public Conta buscarContaDoCliente(Cliente cliente){
+
+		Scanner s = new Scanner(System.in);
+		
+		ArrayList<Conta> contasDoCliente = cliente.getContas();
+
+		if(contasDoCliente.isEmpty()){
+			System.out.println("O Cliente não possui contas cadastradas.");
+		}
+
+		int i = 1;
+
+		for(Conta conta: contasDoCliente){
+			System.out.println("Contas cadastradas do cliente:");
+			System.out.println(i+" - Conta: " + conta.getConta() + " Agencia: " + conta.getAgencia());
+			i++;
+		}
+
+		System.out.println("Digite o índice da conta que deseja realizar o depósito: ");
+		String indice = s.nextLine();
+		
+		try{
+			return contasDoCliente.get(Integer.parseInt(indice) - 1);
+		}catch(NumberFormatException e){
+			System.out.println("Conta selecionada é inválida");			
+		}
+
+		return null;
+
+	}
+
+
+	public void realizarDeposito(){
+		
+		Scanner s = new Scanner(System.in);
+		
+		System.out.println("Informe o seu nome: ");
+		String nome = s.nextLine();
+
+		Cliente cliente = this.procuraCliente(nome);
+
+		if(cliente != null){
+			System.out.println("Informe o sua senha: ");
+			String senha = s.nextLine();
+			
+			if(senha.equals(cliente.getSenha()) == false){
+				System.out.println("Senha inválida");
+			} 
+
+			Conta conta = this.buscarContaDoCliente(cliente);
+
+			System.out.println("Digite o valor do depósito: ");
+			String valorDoDeposito = s.nextLine();
+
+			try{
+				conta.depositar(Double.parseDouble(valorDoDeposito));
+				System.out.println("Seu novo saldo é: " + conta.getSaldo());
+			}catch(NumberFormatException e){
+				System.out.println("Valor de depósito inválido");
+			}
+			
+		}else {
+			System.out.println("Cliente não cadastrado");
+		}
+
 	}
 }

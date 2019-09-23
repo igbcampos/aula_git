@@ -35,7 +35,7 @@ public class Operacao {
         }
     }
 
-    public int pegarValorDaOperacao(){
+    public double pegarValorDaOperacao(){
         return this.valor;
     }
 
