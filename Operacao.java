@@ -2,8 +2,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.io.IOException;
-import Conta;
-// Comentario para marcar o commit 
+
 public class Operacao {
     
     private Conta contaOrigem;
@@ -28,12 +27,11 @@ public class Operacao {
     public String pegarNomeDaOperacao(){
         switch(this.tipoDaOperacao){
             case 1:
-                return 'Saque';
-                break;
+                return "Saque";
             case 2: 
-                return 'Depósito';
+                return "Depósito";
             case 3: 
-                return 'Transferência';
+                return "Transferência";
         }
     }
 
