@@ -33,4 +33,14 @@ public class Cliente {
 		return this.lista_de_contas;
 	}
 	
+
+	public Conta procuraConta(String num) {
+		for(Conta i: this.lista_de_contas) {
+			if(i.getConta().equals(num)) {
+				return i;
+			}
+		}
+		return null;
+	}
+	
 }

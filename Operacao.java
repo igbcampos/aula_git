@@ -29,12 +29,11 @@ public class Operacao {
             case 1:
                 return "Saque";
             case 2: 
-                return "Depósito";
+                return "Deposito";
             case 3: 
-                return "Transferência";
+                return "Transferencia";
         }
-
-        return "Operação";
+		return null;
     }
 
     public double pegarValorDaOperacao(){

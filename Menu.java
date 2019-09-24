@@ -50,6 +50,7 @@ public class Menu {
 			}else if (op == 3){
 				this.menuOperacoes();
 			}
+
 		}
 		return op;
 	}
@@ -349,4 +350,23 @@ public class Menu {
 			System.out.println("Cliente não cadastrado");
 		}
 	}
+	
+	public void RecuperarExtrato(ArrayList<Operacao> extrato, String cliente, String conta) {
+		Cliente x = this.procuraCliente(cliente);
+		if(x == null) {
+			System.out.println("Cliente invalido");
+			return ;
+		}
+		Conta y = x.procuraConta(conta);
+		if(y == null) {
+			System.out.println("Conta invalida");
+			return ;
+		}
+		System.out.println("O saldo da conta e: " + y.getSaldo());
+		System.out.println("Lista de Opera��es realizadas:");
+		for (Operacao i : y.getExtrato()) {
+			System.out.println("Opera��o " + i.pegarNomeDaOperacao() + "no valor de " + i.pegarValorDaOperacao());
+		}
+    }
+	
 }
