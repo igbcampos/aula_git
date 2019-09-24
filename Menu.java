@@ -208,7 +208,7 @@ public class Menu {
 
 		try{
 			if(Integer.parseInt(indice) >= i){
-				System.out.println("Índice Inválido");
+				System.out.println("Indice Inválido");
 				return null;
 			}
 			return contasDoCliente.get(Integer.parseInt(indice) - 1);

@@ -33,6 +33,8 @@ public class Operacao {
             case 3: 
                 return "Transferência";
         }
+
+        return "Operação";
     }
 
     public double pegarValorDaOperacao(){
