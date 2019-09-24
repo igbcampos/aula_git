@@ -192,6 +192,7 @@ public class Menu {
 
 		if(contasDoCliente.isEmpty()){
 			System.out.println("O Cliente não possui contas cadastradas.");
+			return null;
 		}
 
 		int i = 1;
@@ -202,10 +203,14 @@ public class Menu {
 			i++;
 		}
 
-		System.out.println("Digite o índice da conta que deseja realizar o depósito: ");
+		System.out.println("Digite o índice da conta que deseja selecionar: ");
 		String indice = s.nextLine();
-		
+
 		try{
+			if(Integer.parseInt(indice) >= i){
+				System.out.println("Índice Inválido");
+				return null;
+			}
 			return contasDoCliente.get(Integer.parseInt(indice) - 1);
 		}catch(NumberFormatException e){
 			System.out.println("Conta selecionada é inválida");			
@@ -230,16 +235,21 @@ public class Menu {
 			
 			if(senha.equals(cliente.getSenha()) == false){
 				System.out.println("Senha inválida");
+				return;
 			} 
 
 			Conta conta = this.buscarContaDoCliente(cliente);
+
+			if(conta == null){
+				return;
+			}
 
 			System.out.println("Digite o valor do depósito: ");
 			String valorDoDeposito = s.nextLine();
 
 			try{
 				conta.depositar(Double.parseDouble(valorDoDeposito));
-				System.out.println("Seu novo saldo é: " + conta.getSaldo());
+				System.out.println("Seu saldo é: " + conta.getSaldo());
 			}catch(NumberFormatException e){
 				System.out.println("Valor de depósito inválido");
 			}
@@ -264,18 +274,23 @@ public class Menu {
 			
 			if(senha.equals(cliente.getSenha()) == false){
 				System.out.println("Senha inválida");
+				return;
 			} 
 
 			Conta conta = this.buscarContaDoCliente(cliente);
+
+			if(conta == null){
+				return;
+			}
 
 			System.out.println("Digite o valor do Saque: ");
 			String valorDoDeposito = s.nextLine();
 
 			try{
 				conta.sacar(Double.parseDouble(valorDoDeposito));
-				System.out.println("Seu novo saldo é: " + conta.getSaldo());
+				System.out.println("Seu saldo é: " + conta.getSaldo());
 			}catch(NumberFormatException e){
-				System.out.println("Valor de depósito inválido");
+				System.out.println("Valor de saque inválido");
 			}
 			
 		}else {
@@ -297,6 +312,7 @@ public class Menu {
 			
 			if(senha.equals(cliente.getSenha()) == false){
 				System.out.println("Senha inválida");
+				return;
 			} 
 				
 			System.out.println("Informe o seu nome: ");
@@ -311,14 +327,19 @@ public class Menu {
 				System.out.println("Digite o valor da transferência: ");
 				String valorDoDeposito = s.nextLine();
 
+				if((conta != null) && (contaDestino != null)){
+					System.out.println("Conta inválida");
+					return ;
+				}
+
 				try{
 					if((conta.getSaldo() - Double.parseDouble(valorDoDeposito)) > 0 ){
 						conta.sacar(Double.parseDouble(valorDoDeposito));
 						contaDestino.depositar(Double.parseDouble(valorDoDeposito));
-						System.out.println("Seu novo saldo é: " + conta.getSaldo());
+						System.out.println("Seu saldo é: " + conta.getSaldo());
 					}
 				}catch(NumberFormatException e){
-					System.out.println("Valor de depósito inválido");
+					System.out.println("Valor de transferência inválido");
 				}
 			}else {
 				System.out.println("Conta de destino não encontrada.");
